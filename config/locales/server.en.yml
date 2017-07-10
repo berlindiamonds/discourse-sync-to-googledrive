@@ -1,0 +1,5 @@
+en:
+  site_settings:
+    discourse_backups_to_drive_enabled: "Enable the drive backups plugin. After enabling this, it will work on your next backup"
+    discourse_backups_to_drive_quantity: "How many backups will be kept in Google Drive"
+    discourse_backups_to_drive_api_key: "Your Drive Generated Access Token"
