@@ -1,6 +1,6 @@
 # name: discourse-backup-to-googledrive
 # about: -
-# version: 0.0.1
+# version: 1.0
 # authors: Kaja & Jen
 
 require 'google_drive'
