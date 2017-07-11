@@ -4,7 +4,7 @@ module DiscourseBackupToDrive
     def self.sync
 
       session = GoogleDrive::Session.from_config("config.json")
-      folder_name = "folderrr"
+      folder_name = Discourse.current_hostname
 
       local_backup_files = Backup.all.map(&:filename).take(2)
 
