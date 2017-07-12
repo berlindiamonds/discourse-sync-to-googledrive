@@ -2,10 +2,14 @@ module DiscourseBackupToDrive
 	class DriveSynchronizer
 		CHUNK_SIZE = 25600000
 		UPLOAD_MAX_SIZE = CHUNK_SIZE * 4
-
+		
 		def self.sync
 
-			session = GoogleDrive::Session.from_config("config.json")
+			session = GoogleDrive::Session.from_service_account_key("#{Dir.pwd}/plugins/discourse-googledrive-backup/lib/config.json")
+			google = GoogleService.new
+			google.create_service(compute, scopes, session)
+			
+
 			folder_name = Discourse.current_hostname
 
 			begin
