@@ -20,6 +20,6 @@ module DiscourseBackupToDrive
         session.root_collection.remove(file)
       end
     end
-    
+
   end
 end
