@@ -6,3 +6,5 @@
 - Before committing your changes make your you write the json file into your gitignore of the plugin
 - In the discourse-googledrive-plugin/lib/drive_sychronizer.rb refere to your json file when assigning the session
 - further info about the Google Drive API: https://developers.google.com/api-client-library/ruby/auth/service-accounts
+
+this plugin was created by Jen and Kaja, in analogy to the discourse-backup-to-dropbox plugin from Falco
