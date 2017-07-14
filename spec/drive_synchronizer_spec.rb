@@ -1,5 +1,6 @@
 require 'spec_helper'
 require './lib/drive_synchronizer.rb'
+require 'factories'
 
 describe DiscourseBackupToDrive::DriveSynchronizer do
 
@@ -11,6 +12,10 @@ describe DiscourseBackupToDrive::DriveSynchronizer do
 
   let ".upload" do
     expect {folder_name.add(file)}.to change {folder_name}.to_include(file)
+  end
+
+  it "creates a session" do
+    expect(session).to_not be nil
   end
 end
 

@@ -3,6 +3,10 @@
 # version: 1.0
 # authors: Kaja & Jen
 
+unless Rails.env.production?
+	gem 'factory_girl', "4.8.0"
+end
+
 require 'google_drive'
 require 'sidekiq'
 
