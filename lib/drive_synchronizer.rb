@@ -3,7 +3,7 @@ module DiscourseBackupToDrive
 
     def self.sync
       session = GoogleDrive::Session.from_config("config.json")
-      service_session = GoogleDrive::Session.from_service_account_key("servicekey.json")
+      #session = GoogleDrive::Session.from_service_account_key("#{Dir.pwd}/plugins/discourse-googledrive-backup/lib/servicekey.json")
 
       folder_name = Discourse.current_hostname
 
