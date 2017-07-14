@@ -1,7 +1,16 @@
 require 'spec_helper'
 require './lib/drive_synchronizer.rb'
+require 'mocha/test_unit'
 
 describe DiscourseBackupToDrive::DriveSynchronizer do
+
+  let(:b1) { Backup.new('backup1') }
+  let(:b2) { Backup.new('backup2') }
+  let(:b3) { Backup.new('backup3') }
+
+  before do
+    allow(Backup).to receive(:all).and_return([b1, b2, b3])
+  end
 
 	describe ".sync" do
     it "syncs itself" do
@@ -24,12 +33,12 @@ end
  #     expect {
         # not changing
  #     }.to_not change { count }
-      
+
  #     count = 1
  #     expect {
   #      count = 3
   #    }.to change { count }.to(3)
-      
+
   #    count = 1
    #   expect {
   #      count = 3
