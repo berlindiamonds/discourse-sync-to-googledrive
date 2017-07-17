@@ -1,7 +1,7 @@
 module DiscourseBackupToDrive
   class DriveSynchronizer
-    
     def self.sync
+
       #session = GoogleDrive::Session.from_config("config.json")
       session = GoogleDrive::Session.from_service_account_key("#{Dir.pwd}/lib/config.json")
 
