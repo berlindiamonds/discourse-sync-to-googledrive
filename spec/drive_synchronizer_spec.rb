@@ -1,23 +1,40 @@
 require 'spec_helper'
 require './lib/drive_synchronizer.rb'
-require 'factories'
 
 describe DiscourseBackupToDrive::DriveSynchronizer do
+
+  #before() do
+    #  SiteSetting.discourse_backups_to_drive = "discourse_backups_to_drive"
+    #end
 
 	describe ".sync" do
     it "syncs itself" do
       should described_class.sync == true
+      should SiteSetting.discourse_backups_to_drive = "discourse_backups_to_drive"
+    end
+    let(described_class.sync.to_s) do 
+      GoogleDrive::Session.new(stub_responses: true)
+    end
+    let(described_class.sync.to_s) do 
+      Discourse.current_hostname =! nil
     end
 	end
 
-  let ".upload" do
-    expect {folder_name.add(file)}.to change {folder_name}.to_include(file)
-  end
 
-  it "creates a session" do
-    expect(session).to_not be nil
-  end
+
+    
+  
+
+  #let ".upload" do
+  #  expect {folder_name.add(file)}.to change {folder_name}.to_include(file)
+  #end
+
+  #it "creates a session" do
+  #  expect(session).to_not be nil
+  #end
 end
+
+
 
 
 #it "shows cool things" do
