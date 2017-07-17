@@ -20,7 +20,6 @@ gem 'representable', "3.0.4", { require: false }
 gem 'google-api-client', "0.10.3", { require: false }
 
 gem 'google_drive', '2.1.2'
->>>>>>> master
 require 'sidekiq'
 
 enabled_site_setting :discourse_backups_to_drive_enabled
