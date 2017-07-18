@@ -1,13 +1,8 @@
-require 'json'
-
 module DiscourseBackupToDrive
   class DriveSynchronizer
 
     def self.sync
-      string = SiteSetting.discourse_backups_to_drive_api_key
-      json_like_obj = string.concat("}").prepend("{")
-      io_api = StringIO.new(json_like_obj)
-      session = GoogleDrive::Session.from_service_account_key(io_api)
+      session = GoogleDrive::Session.from_service_account_key(StringIO.new(SiteSetting.discourse_backups_to_drive_api_key))
 
       folder_name = Discourse.current_hostname
       local_backup_files = Backup.all.map(&:filename).take(SiteSetting.discourse_backups_to_drive_quantity)
