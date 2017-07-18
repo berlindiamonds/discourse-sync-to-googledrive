@@ -13,22 +13,22 @@ describe DiscourseBackupToDrive::DriveSynchronizer do
     allow(Backup).to receive(:all).and_return([b1, b2, b3])
   end
 
-	describe ".sync" do
+  describe ".sync" do
     it "syncs itself" do
       should described_class.sync == true
     end
-    let(described_class.sync.to_s) do 
+    let(described_class.sync.to_s) do
       GoogleDrive::Session.new(stub_responses: true)
     end
-    let(described_class.sync.to_s) do 
+    let(described_class.sync.to_s) do
       Discourse.current_hostname =! nil
     end
-	end
+  end
 
 
 
-    
-  
+
+
 
   #let ".upload" do
   #  expect {folder_name.add(file)}.to change {folder_name}.to_include(file)
@@ -38,5 +38,3 @@ describe DiscourseBackupToDrive::DriveSynchronizer do
   #  expect(session).to_not be nil
   #end
 end
-
-
