@@ -1,3 +1,7 @@
+.byebug_history
+dump.rdb
+tmp
+gems
 config.json
 servicekey.json
 <<<<<<< HEAD
