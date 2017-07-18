@@ -4,8 +4,5 @@ tmp
 gems
 config.json
 servicekey.json
-<<<<<<< HEAD
-=======
 drive-up-down-5820edb841cd.json
->>>>>>> service
 client_secret.json
