@@ -1,12 +1,10 @@
 module DiscourseBackupToDrive
   class DriveSynchronizer
-    def self.sync
 
-      #session = GoogleDrive::Session.from_config("config.json")
-      session = GoogleDrive::Session.from_service_account_key("#{Dir.pwd}/lib/config.json")
+    def self.sync
+      session = GoogleDrive::Session.from_service_account_key(StringIO.new(SiteSetting.discourse_backups_to_drive_api_key))
 
       folder_name = Discourse.current_hostname
-
       local_backup_files = Backup.all.map(&:filename).take(SiteSetting.discourse_backups_to_drive_quantity)
 
       local_backup_files.each do |filename|
