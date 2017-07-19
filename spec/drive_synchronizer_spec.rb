@@ -1,21 +1,6 @@
-require 'rails_helper'
 
 describe ::DiscourseBackupToDrive::DriveSynchronizer do
-
-<<<<<<< HEAD
-# comment this out cause when running test with this mocks, i get 
-# Failure/Error: full_path = Backup[filename].path
-# NoMethodError:
-# undefined method `path' for nil:NilClass
-
-  #let(:b1) { Backup.new('backup1') }
-  #let(:b2) { Backup.new('backup2') }
-  #let(:b3) { Backup.new('backup3') }
-
-  #before do
-  #  allow(Backup).to receive(:all).and_return([b1, b2, b3])
-  #end
-=======
+  
   let(:backup) { Backup.new('backup') }
 
   describe "#backup" do
@@ -24,7 +9,7 @@ describe ::DiscourseBackupToDrive::DriveSynchronizer do
       expect(ds.backup).to eq(backup)
     end
   end
->>>>>>> master
+
 
   describe "#can_sync?" do
     it "should return false when disabled via site setting" do
@@ -57,10 +42,3 @@ describe ::DiscourseBackupToDrive::DriveSynchronizer do
   end
 
 end
-<<<<<<< HEAD
-
-#object = mock()
-#object.stubs(:stubbed_method_one).returns(:result_one)
-#object.stubs(:stubbed_method_two).returns(:result_two)
-=======
->>>>>>> master
