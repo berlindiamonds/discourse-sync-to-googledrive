@@ -2,6 +2,7 @@
 # about: -
 # version: 1.0
 # authors: Kaja & Jen
+# url: https://github.com/berlindiamonds/discourse-googledrive-backup
 
 
 gem 'httpclient', '2.8.3', { require: false }
@@ -30,7 +31,7 @@ after_initialize do
 
   Backup.class_eval do
     def after_create_hook
-      Jobs.enqueue(:sync_backups_to_drive) 
+      Jobs.enqueue(:sync_backups_to_drive)
     end
   end
 end
