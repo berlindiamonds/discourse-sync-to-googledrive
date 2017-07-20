@@ -4,7 +4,7 @@ module Jobs
     sidekiq_options queue: 'low'
 
     def execute(args)
-      ::DiscourseBackupToDrive::DriveSynchronizer.sync if SiteSetting.discourse_backups_to_drive_enabled
+      ::DiscourseBackupToDrive::DriveSynchronizer.new(backup) 
     end
   end
 end
