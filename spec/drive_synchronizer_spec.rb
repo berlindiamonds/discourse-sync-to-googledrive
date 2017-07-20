@@ -1,7 +1,6 @@
-require 'rails_helper'
 
 describe ::DiscourseBackupToDrive::DriveSynchronizer do
-
+  
   let(:backup) { Backup.new('backup') }
 
   describe "#backup" do
@@ -10,6 +9,7 @@ describe ::DiscourseBackupToDrive::DriveSynchronizer do
       expect(ds.backup).to eq(backup)
     end
   end
+
 
   describe "#can_sync?" do
     it "should return false when disabled via site setting" do

@@ -30,7 +30,7 @@ after_initialize do
 
   Backup.class_eval do
     def after_create_hook
-      Jobs.enqueue(:sync_backups_to_drive)
+      Jobs.enqueue(:sync_backups_to_drive) 
     end
   end
 end
