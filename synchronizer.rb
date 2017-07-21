@@ -4,9 +4,9 @@ class Synchronizer
 
 	def initialize
 		@backup 						= backup
-    @api_key 						= SiteSetting.discourse_backups_to_drive_api_key
-    @turned_on 					= SiteSetting.discourse_backups_to_drive_enabled
-    @number_of_backups 	= SiteSetting.discourse_backups_to_drive_quantity
+    @api_key 						= SiteSetting.load_settings(api_key)	# need to find a way to take the
+    @turned_on 					= SiteSetting.enabled?								# values from the yml file and
+    @number_of_backups 	= SiteSetting.load_settings(quantity) # assign it to the right var
 	end
 
 	def can_sync?
