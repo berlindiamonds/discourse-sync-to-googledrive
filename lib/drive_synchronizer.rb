@@ -1,6 +1,6 @@
 module DiscourseBackupToDrive
   class DriveSynchronizer
-
+  byebug
     attr_reader :backup
 
     def initialize(backup)

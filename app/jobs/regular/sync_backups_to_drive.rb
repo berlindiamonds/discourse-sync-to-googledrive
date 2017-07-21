@@ -4,7 +4,10 @@ module Jobs
     sidekiq_options queue: 'low'
 
     def execute(args)
-      ::DiscourseBackupToDrive::DriveSynchronizer.new(backup) 
+      Backup.all each do |backup|
+				::DiscourseBackupToDrive::DriveSynchronizer.new(backup).sync 
+			end
     end
   end
 end
+
