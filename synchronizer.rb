@@ -3,9 +3,10 @@ class Synchronizer
 	attr_reader :backup
 
 	def initialize
-		@backup = backup
-    @api_key = SiteSetting.discourse_backups_to_drive_api_key
-    @turned_on = SiteSetting.discourse_backups_to_drive_enabled
+		@backup 						= backup
+    @api_key 						= SiteSetting.discourse_backups_to_drive_api_key
+    @turned_on 					= SiteSetting.discourse_backups_to_drive_enabled
+    @number_of_backups 	= SiteSetting.discourse_backups_to_drive_quantity
 	end
 
 	def can_sync?

@@ -2,6 +2,7 @@
 # about: -
 # version: 1.0
 # authors: Kaja & Jen
+# url: https://github.com/berlindiamonds/discourse-googledrive-backup
 
 
 gem 'httpclient', '2.8.3', { require: false }
