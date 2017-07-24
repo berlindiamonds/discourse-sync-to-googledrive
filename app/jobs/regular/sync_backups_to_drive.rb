@@ -3,11 +3,8 @@ module Jobs
 
     sidekiq_options queue: 'low'
 
-    def execute(args)
-      local_backup_files = Backup.all.map(&:filename).take(SiteSetting.discourse_backups_quantity)
-      local_backup_files each do |backup|
-        ::DiscourseBackupToDrive::DriveSynchronizer.new(backup).sync
-      end
+    def execute(arg)
+      Backup.all.take(1).each {|backup| DiscourseBackupToDrive::DriveSynchronizer.new(backup).sync }
     end
   end
 end

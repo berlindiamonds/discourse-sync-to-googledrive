@@ -2,7 +2,11 @@ class Synchronizer
 
   attr_reader :backup
 
-  def initialize
+  def backup
+    @backup
+  end
+
+  def initialize(backup)
     @backup = backup
     @api_key = SiteSetting.discourse_backups_api_key
     @turned_on = SiteSetting.discourse_backups_enabled
@@ -14,8 +18,8 @@ class Synchronizer
   end
 
   def sync
-    if @backup.can_sync
-      @backup.perform_sync
+    if can_sync?
+      perform_sync
     end
   end
 

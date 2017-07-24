@@ -4,16 +4,14 @@ module DiscourseBackupToDrive
     protected
     def perform_sync
       session = session_meth
-      # local_backup_files = Backup.all.map(&:filename).take(SiteSetting.discourse_backups_quantity)
-      local_backup_files.each do |f|
-        full_path = Backup[f].path
-        file = session.upload_from_file(full_path, f)
-        add_to_folder(session, file)
-        session.root_collection.remove(file)
-      end
+      full_path = backup.path
+      filename = backup.filename
+      file = session.upload_from_file(full_path, filename)
+      add_to_folder(session, file)
+      session.root_collection.remove(file)
     end
 
-    def self.session_meth
+    def session_meth
       GoogleDrive::Session.from_service_account_key(StringIO.new(@api_key))
     end
 
@@ -27,6 +25,5 @@ module DiscourseBackupToDrive
         folder.add(file)
       end
     end
-
   end
 end

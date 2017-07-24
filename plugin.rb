@@ -4,7 +4,6 @@
 # authors: Kaja & Jen
 # url: https://github.com/berlindiamonds/discourse-googledrive-backup
 
-
 gem 'httpclient', '2.8.3', { require: false }
 gem 'signet', '0.7.3', { require: false }
 gem 'os', '0.9.6', { require: false }
@@ -23,7 +22,7 @@ gem 'google-api-client', "0.10.3", { require: false }
 gem 'google_drive', '2.1.2'
 require 'sidekiq'
 
-enabled_site_setting :discourse_backups_to_drive_enabled
+enabled_site_setting :discourse_backups_enabled
 
 after_initialize do
 	load File.expand_path("../lib/synchronizer.rb", __FILE__)
