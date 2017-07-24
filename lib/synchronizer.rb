@@ -14,12 +14,13 @@ class Synchronizer
   end
 
   def sync
-    if @backup.can_sync
+    if @backup.can_sync?
       @backup.perform_sync
     end
   end
 
   protected
+
   def perform_sync
   end
 
