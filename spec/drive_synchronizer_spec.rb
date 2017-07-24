@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 require 'rails_helper'
 
 describe ::DiscourseBackupToDrive::DriveSynchronizer do
 
+=======
+require './lib/synchronizer.rb'
+describe ::DiscourseBackupToDrive::Synchronizer::DriveSynchronizer do
+  
+>>>>>>> ad7a6f05a99a332643dbc04170c9cfa36a15a1ed
   let(:backup) { Backup.new('backup') }
 
   describe "#backup" do
