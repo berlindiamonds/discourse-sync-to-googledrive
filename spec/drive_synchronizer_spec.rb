@@ -1,5 +1,5 @@
 describe ::DiscourseBackupToDrive::DriveSynchronizer do
-  
+
   let(:backup) { Backup.new('backup') }
 
   describe "#backup" do
