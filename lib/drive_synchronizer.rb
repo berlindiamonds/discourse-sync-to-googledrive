@@ -1,26 +1,11 @@
 module DiscourseBackupToDrive
-  class DriveSynchronizer
+  class DriveSynchronizer < Synchronizer 
 
-    attr_reader :backup
-
-    def initialize(backup)
-      @backup = backup
-      @api_key = SiteSetting.discourse_backups_to_drive_api_key
-      @turned_on = SiteSetting.discourse_backups_to_drive_enabled 
-    end
-
-
-    
-
-    def can_sync?
-      @turned_on && @api_key.present? && backup.present?
-    end
-
-    def self.sync
-      session = GoogleDrive::Session.from_service_account_key(StringIO.new(SiteSetting.discourse_backups_to_drive_api_key))
+    protected
+    def perform_sync
+      session = GoogleDrive::Session.from_service_account_key(StringIO.new(@api_key))
       folder_name = Discourse.current_hostname
-      local_backup_files = Backup.all.map(&:filename).take(SiteSetting.discourse_backups_to_drive_quantity)
-      @last_upload = local_backup_files
+      local_backup_files = Backup.all.map(&:filename).take(@number_of_backups)
       local_backup_files.each do |filename|
         full_path = Backup[filename].path
         file = session.upload_from_file(full_path, filename)

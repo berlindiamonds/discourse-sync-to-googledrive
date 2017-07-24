@@ -1,5 +1,5 @@
-
-describe ::DiscourseBackupToDrive::DriveSynchronizer do
+require './lib/synchronizer.rb'
+describe ::DiscourseBackupToDrive::Synchronizer::DriveSynchronizer do
   
   let(:backup) { Backup.new('backup') }
 
