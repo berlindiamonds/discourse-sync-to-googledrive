@@ -14,8 +14,8 @@ class Synchronizer
   end
 
   def sync
-    if @backup.can_sync?
-      @backup.perform_sync
+    if can_sync?
+      perform_sync
     end
   end
 
