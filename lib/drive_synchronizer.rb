@@ -1,24 +1,5 @@
 module DiscourseBackupToDrive
   class DriveSynchronizer < Synchronizer 
-    #attr_reader :backup
-
-    def initialize(backup)
-      @backup              = backup
-      @api_key             = SiteSetting.discourse_backups_to_drive_api_key
-      @turned_on           = SiteSetting.discourse_backups_to_drive_enabled
-      @number_of_backups   = SiteSetting.discourse_backups_to_drive_quantity
-    end
-
-    #def can_sync?
-    #  @turned_on && @api_key.present? && backup.present?
-    #end
- 
-    #def sync
-    # if @backup.can_sync
-    #    @backup.perform_sync
-    # end
-    #end
-    # obsolete, because it is automatically inherited from the Synchronizer class
 
     protected
     def perform_sync
