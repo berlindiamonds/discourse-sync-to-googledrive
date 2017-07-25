@@ -1,8 +1,8 @@
 module DiscourseBackupToDrive
   class DriveSynchronizer < Synchronizer
 
-    def initialize
-      super
+    def initialize(backup)
+      super(backup)
       @session = GoogleDrive::Session.from_service_account_key(StringIO.new(@api_key))
     end
 
