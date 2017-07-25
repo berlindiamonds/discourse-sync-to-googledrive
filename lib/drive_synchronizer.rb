@@ -1,18 +1,18 @@
 module DiscourseBackupToDrive
   class DriveSynchronizer < Synchronizer
 
-    protected
-    def perform_sync
-      session = session_meth
-      full_path = backup.path
-      filename = backup.filename
-      file = session.upload_from_file(full_path, filename)
-      add_to_folder(session, file)
-      session.root_collection.remove(file)
+    def initialize
+      super
+      @session = GoogleDrive::Session.from_service_account_key(StringIO.new(@api_key))
     end
 
-    def session_meth
-      GoogleDrive::Session.from_service_account_key(StringIO.new(@api_key))
+    protected
+    def perform_sync
+      full_path = backup.path
+      filename = backup.filename
+      file = @session.upload_from_file(full_path, filename)
+      add_to_folder(@session, file)
+      @session.root_collection.remove(file)
     end
 
     def add_to_folder(session, file)
