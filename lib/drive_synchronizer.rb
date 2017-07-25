@@ -1,5 +1,5 @@
 module DiscourseBackupToDrive
-  class DriveSynchronizer < Synchronizer 
+  class DriveSynchronizer < Synchronizer
 
     protected
     def perform_sync
@@ -22,4 +22,3 @@ module DiscourseBackupToDrive
 
   end
 end
-
