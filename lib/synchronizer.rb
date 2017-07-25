@@ -7,7 +7,7 @@ class Synchronizer
   end
 
   def sync
-    perform_sync  if can_sync?
+    perform_sync if can_sync?
   end
 
   protected
