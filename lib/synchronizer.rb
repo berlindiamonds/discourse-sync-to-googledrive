@@ -12,7 +12,12 @@ class Synchronizer
 
   protected
 
+  def can_sync
+    raise "implement this method as a boolean method in your subclass"
+  end
+
   def perform_sync
+    raise "implement this method in your subclass"
   end
 
 end
