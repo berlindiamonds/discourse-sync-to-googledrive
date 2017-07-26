@@ -1,4 +1,4 @@
-# name: discourse-backup-to-googledrive
+# name: discourse-backup-to-oauth
 # about: -
 # version: 1.0
 # authors: Kaja & Jen
@@ -21,13 +21,20 @@ gem 'google-api-client', "0.10.3", { require: false }
 
 gem 'google_drive', '2.1.2'
 require 'sidekiq'
+require 'googleauth'
 
 enabled_site_setting :discourse_backups_drive_enabled
 
 after_initialize do
   load File.expand_path("../lib/synchronizer.rb", __FILE__)
-  load File.expand_path("../app/jobs/regular/sync_backups_to_drive.rb", __FILE__)
-  load File.expand_path("../lib/drive_synchronizer.rb", __FILE__)
+  load File.expand_path("../app/jobs/regular/sync_backups_to_oauth.rb", __FILE__)
+  load File.expand_path("../lib/oauth_synchronizer.rb", __FILE__)
+
+  Discourse::Application.routes.draw do
+  	def create_route(auth_url)
+  		get "admin#backup" => "admin#oauth"
+  	end
+  end
 
   Backup.class_eval do
     def after_create_hook

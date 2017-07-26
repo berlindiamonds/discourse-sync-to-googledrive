@@ -3,8 +3,8 @@ module Jobs
 
     sidekiq_options queue: 'low'
 
-    def execute(args)
-      ::DiscourseBackupToDrive::DriveSynchronizer.sync if SiteSetting.discourse_backups_to_drive_enabled
+    def execute(arg)
+      Backup.all.take(SiteSetting.discourse_backups_drive_quantity).each {|backup| DiscourseBackupToDrive::DriveSynchronizer.new(backup).sync }
     end
   end
 end
