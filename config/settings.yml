@@ -1,7 +1,7 @@
 plugins:
-  discourse_backups_enabled:
+  discourse_backups_drive_enabled:
     default: false
-  discourse_backups_quantity:
+  discourse_backups_drive_quantity:
     default: 5
-  discourse_backups_api_key:
+  discourse_backups_drive_api_key:
     default: ''

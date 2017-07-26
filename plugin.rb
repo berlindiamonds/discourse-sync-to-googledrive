@@ -22,10 +22,10 @@ gem 'google-api-client', "0.10.3", { require: false }
 gem 'google_drive', '2.1.2'
 require 'sidekiq'
 
-enabled_site_setting :discourse_backups_enabled
+enabled_site_setting :discourse_backups_drive_enabled
 
 after_initialize do
-	load File.expand_path("../lib/synchronizer.rb", __FILE__)
+  load File.expand_path("../lib/synchronizer.rb", __FILE__)
   load File.expand_path("../app/jobs/regular/sync_backups_to_drive.rb", __FILE__)
   load File.expand_path("../lib/drive_synchronizer.rb", __FILE__)
 
