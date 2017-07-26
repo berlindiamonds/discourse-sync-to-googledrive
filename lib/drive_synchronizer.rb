@@ -19,7 +19,6 @@ module DiscourseBackupToDrive
     protected
     def perform_sync
       session = session
-      drive_sess = session
       full_path = backup.path
       filename = backup.filename
       file = drive_sess.upload_from_file(full_path, filename)
