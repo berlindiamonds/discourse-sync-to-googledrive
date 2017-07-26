@@ -10,7 +10,7 @@ module DiscourseBackupToDrive
 									    "https://www.googleapis.com/auth/drive",
 									    "https://spreadsheets.google.com/feeds/",
 									  ]
-			@uri 				= Discourse.redirect_uri(google_oauth)
+			@uri 				= Discourse.create_route(auth_url).redirect_uri
 		end
 
 		def credentials(@credentials)
@@ -18,10 +18,12 @@ module DiscourseBackupToDrive
 		end
 
 		def session
+			@credentials.code = authorization_code
+			@credentials.fetch_access_token!
 			@session 	||= GoogleDrive::Session.from_credentials(@credentials)
 		end
 
-		def authorized?
+		def authorized?(auth_url)
 			auth_url 		= @credentials.authorization_uri
 			auth_url.present?
 		end

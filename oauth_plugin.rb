@@ -31,8 +31,8 @@ after_initialize do
   load File.expand_path("../lib/oauth_synchronizer.rb", __FILE__)
 
   Discourse::Application.routes.draw do
-  	def create_route
-  		get "admin#backup" => "admin#plugins"
+  	def create_route(auth_url)
+  		get "admin#backup" => "admin#oauth"
   	end
   end
 

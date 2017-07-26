@@ -1,5 +1,5 @@
 module Jobs
-  class SyncBackupsToDrive < ::Jobs::Base
+  class SyncBackupsToOauth < ::Jobs::Base
 
     sidekiq_options queue: 'low'
 
