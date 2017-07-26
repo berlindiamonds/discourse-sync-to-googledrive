@@ -20,6 +20,9 @@ module DiscourseBackupToDrive
 		def session
 			@credentials.code = authorization_code
 			@credentials.fetch_access_token!
+			if @session.expired
+				@credentials.refresh_token = refresh_token
+			end
 			@session 	||= GoogleDrive::Session.from_credentials(@credentials)
 		end
 
