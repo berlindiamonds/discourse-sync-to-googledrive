@@ -1,6 +1,6 @@
 describe Synchronizer do
 
-  class TestSynchorizer < Synchronizer
+  class TestSynchronizer < Synchronizer
     def initialize(can_sync)
       @can_sync = can_sync
       @performed = false
@@ -32,8 +32,6 @@ describe Synchronizer do
         ts.sync
         expect(ts.performed?).to eq(false)
      end
-
-    end
   end
   
 end
