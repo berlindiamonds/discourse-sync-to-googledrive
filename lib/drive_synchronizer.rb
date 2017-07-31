@@ -3,8 +3,8 @@ module DiscourseBackupToDrive
 
     def initialize(backup)
       super(backup)
-      @api_key = SiteSetting.discourse_backups_drive_api_key
-      @turned_on = SiteSetting.discourse_backups_drive_enabled
+      @api_key = SiteSetting.discourse_sync_to_googledrive_api_key
+      @turned_on = SiteSetting.discourse_sync_to_googledrive_enabled
     end
 
     def session

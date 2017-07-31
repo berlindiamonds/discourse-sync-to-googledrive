@@ -4,7 +4,7 @@ module Jobs
     sidekiq_options queue: 'low'
 
     def execute(arg)
-      many_backups = Backup.all.take(SiteSetting.discourse_backups_drive_quantity)
+      many_backups = Backup.all.take(SiteSetting.discourse_sync_to_googledrive_quantity)
       many_backups.each do|backup|
         DiscourseBackupToDrive::DriveSynchronizer.new(backup).sync
       end
