@@ -3,9 +3,9 @@ module DiscourseBackupToDrive
 
     def initialize(backup)
       super(backup)
-      @turned_on  = SiteSetting.discourse_backups_to_oauth_enabled
-      @id         = client_id_from_settings(SiteSetting.discourse_backups_to_oauth_client_id)
-      @secret     = client_secret_from_settings(SiteSetting.discourse_backups_to_oauth_client_secret)
+      @turned_on  = SiteSetting.discourse_sync_to_oauth_enabled
+      @id         = client_id_from_settings(SiteSetting.discourse_sync_to_oauth_client_id)
+      @secret     = client_secret_from_settings(SiteSetting.discourse_sync_to_oauth_client_secret)
       @scope      = [
                       "https://www.googleapis.com/auth/drive",
                       "https://spreadsheets.google.com/feeds/",
