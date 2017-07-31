@@ -9,7 +9,6 @@ describe ::DiscourseBackupToDrive::DriveSynchronizer do
     end
   end
 
-
   describe "#can_sync?" do
     it "should return false when disabled via site setting" do
       SiteSetting.discourse_sync_to_googledrive_enabled = false
