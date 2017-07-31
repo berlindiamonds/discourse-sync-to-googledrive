@@ -1,11 +1,11 @@
 module DiscourseBackupToDrive
-  class OauthSynchronizer < Synchronizer 
+  class OauthSynchronizer < Synchronizer
 
     def initialize(backup)
       super(backup)
       @turned_on  = SiteSetting.discourse_backups_to_oauth_enabled
-      @id         = client_id_from_settings(SiteSetting.discourse_backups_to_oauth_client_id) #could be also taken 
-      @secret     = client_secret_from_settings(SiteSetting.discourse_backups_to_oauth_client_secret) #from config
+      @id         = client_id_from_settings(SiteSetting.discourse_backups_to_oauth_client_id)
+      @secret     = client_secret_from_settings(SiteSetting.discourse_backups_to_oauth_client_secret)
       @scope      = [
                       "https://www.googleapis.com/auth/drive",
                       "https://spreadsheets.google.com/feeds/",
@@ -14,20 +14,20 @@ module DiscourseBackupToDrive
     end
 
     def credentials(@credentials)
-      @credentials = Google::Auth::UserRefreshCredentials.new(@id, @secret, @scope, @uri)
+      @credentials ||= Google::Auth::UserRefreshCredentials.new(@id, @secret, @scope, @uri)
     end
 
     def session
-      @credentials.code = authorization_code
-      @credentials.fetch_access_token!
+      credentials.code = authorization_code
+      credentials.fetch_access_token!
       if @session.expired
-        @credentials.refresh_token = refresh_token
+        credentials.refresh_token = refresh_token
       end
       @session  ||= GoogleDrive::Session.from_credentials(@credentials)
     end
 
     def authorized?(auth_url)
-      auth_url    = @credentials.authorization_uri
+      auth_url    = credentials.authorization_uri
       auth_url.present?
     end
 
