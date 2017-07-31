@@ -25,7 +25,6 @@ require 'sidekiq'
 enabled_site_setting :discourse_backups_drive_enabled
 
 after_initialize do
-  load File.expand_path("../../discourse-abasic-sync-plugin/lib/synchronizer.rb", __FILE__)
   load File.expand_path("../app/jobs/regular/sync_backups_to_drive.rb", __FILE__)
   load File.expand_path("../lib/drive_synchronizer.rb", __FILE__)
 
