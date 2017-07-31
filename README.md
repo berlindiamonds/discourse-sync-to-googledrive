@@ -1,4 +1,5 @@
-# Discourse Backup to Google Drive Service Account
+# Discourse Sync to Google Drive
+A Plugin for Discourse that does a backup to your Google Drive Service Account
 
 1. Make sure you have the latest version of Discourse set up properly
 2. Install the [basic-sync-plugin](https://github.com/berlindiamonds/basic-sync-plugin) first
