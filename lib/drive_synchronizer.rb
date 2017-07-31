@@ -34,6 +34,6 @@ module DiscourseBackupToDrive
         folder.add(file)
       end
     end
-    
+
   end
 end
