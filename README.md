@@ -2,7 +2,7 @@
 A Plugin for Discourse that does a backup to your Google Drive Service Account
 
 1. Make sure you have the latest version of Discourse set up properly
-2. Install the [basic-sync-plugin](https://github.com/berlindiamonds/basic-sync-plugin) first
+2. Install the [basic-sync-plugin](https://github.com/berlindiamonds/discourse-sync-base) first
 3. Clone this repository into your discourse/plugins folder
 4. In the browser go to your admin settings and then to plugins. You should see the discourse-googledrive-backup appearing there
 
