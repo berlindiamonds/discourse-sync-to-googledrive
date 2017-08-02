@@ -35,5 +35,15 @@ module DiscourseBackupToDrive
       end
     end
 
+    def remove_old_files
+      google_files = files.collection_by_title
+      local_files  = Backup.all.map(&:filename)
+      google_files.each do |d|
+        unless local_files.include?(d)
+          d.delete
+        end
+      end
+    end
+
   end
 end
