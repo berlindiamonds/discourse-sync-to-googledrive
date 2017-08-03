@@ -36,12 +36,32 @@ module DiscourseBackupToDrive
     end
 
     def remove_old_files
-      google_files = session.files.map(&:created_time)
-      old = google_files.count - SiteSetting.discourse_sync_to_googledrive_quantity
-      google_files.pop(old)
-      #local_files  = Backup.all.map(&:filename)
-      #(google_files - local_files).collect(&:delete)
+
     end
 
   end
 end
+
+
+
+# google_files = @session.files
+# sorted = google_files.sort_by {|x| x.created_time}
+# keep = sorted.take(SiteSetting.discourse_sync_to_googledrive_quantity)
+# trash = google_files - keep
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
