@@ -18,12 +18,20 @@ module DiscourseBackupToDrive
 
     protected
     def perform_sync
-      full_path = backup.path
-      filename = backup.filename
-      file = session.upload_from_file(full_path, filename)
-      add_to_folder(file)
-      session.root_collection.remove(file)
+      upload_unique_files
       remove_old_files
+    end
+
+    def upload_unique_files
+      ([backup] - session.collection_by_title(@folder_name).files).each do |f|
+        if f.present?
+          full_path = backup.path
+          filename = backup.filename
+          file = session.upload_from_file(full_path, filename)
+          add_to_folder(file)
+          session.root_collection.remove(file)
+        end
+      end
     end
 
     def add_to_folder(file)
