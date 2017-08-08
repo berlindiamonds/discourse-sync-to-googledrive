@@ -36,11 +36,24 @@ module DiscourseBackupToDrive
     end
 
     def remove_old_files
-      google_files = session.files
+      folder_name = Discourse.current_hostname
+      google_files = session.collection_by_title(folder_name).files
       sorted = google_files.sort_by {|x| x.created_time}
       keep = sorted.take(SiteSetting.discourse_sync_to_googledrive_quantity)
-      trash = google_files - keep
+      trash = (google_files - keep).map(&:name)
       trash.each { |d| d.delete(true) }
     end
   end
 end
+
+#google_files = session.collection_by_title(folder_name).files =>
+#[#<GoogleDrive::File id="0B7WjYjWZJv_4OHdWUGw4LTFhX2c" title="discourse-2017-07-18-144609-v20170713164357.tar.gz">,
+ #<GoogleDrive::File id="0B7WjYjWZJv_4TTJBZDFPdm41U2M" title="discourse-2017-07-18-144609-v20170713164357.tar.gz">]
+
+
+#session.files =>
+# [#<GoogleDrive::File id="0B7WjYjWZJv_4OHdWUGw4LTFhX2c" title="discourse-2017-07-18-144609-v20170713164357.tar.gz">,
+ #<GoogleDrive::Collection id="0B7WjYjWZJv_4WFFFcEhCUWZaUHc" title="localhost">,
+ #<GoogleDrive::File id="0B7WjYjWZJv_4TTJBZDFPdm41U2M" title="discourse-2017-07-18-144609-v20170713164357.tar.gz">,
+ #<GoogleDrive::File id="0B7WjYjWZJv_4c3RhcnRlcl9maWxl" title="Getting started">,
+ #<GoogleDrive::File id="0B7WjYjWZJv_4aHhUVUd3dVQxcHM" title="discourse-2017-07-18-141648-v20170713164357.sql.gz">]
