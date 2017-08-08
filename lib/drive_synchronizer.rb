@@ -5,6 +5,7 @@ module DiscourseBackupToDrive
       super(backup)
       @api_key = SiteSetting.discourse_sync_to_googledrive_api_key
       @turned_on = SiteSetting.discourse_sync_to_googledrive_enabled
+      @folder_name = Discourse.current_hostname
     end
 
     def session
@@ -22,22 +23,22 @@ module DiscourseBackupToDrive
       file = session.upload_from_file(full_path, filename)
       add_to_folder(file)
       session.root_collection.remove(file)
+      remove_old_files
     end
 
     def add_to_folder(file)
-      folder_name = Discourse.current_hostname
-      folder = session.collection_by_title(folder_name)
+      @folder_name = Discourse.current_hostname
+      folder = session.collection_by_title(@folder_name)
       if folder.present?
         folder.add(file)
       else
-        folder = session.root_collection.create_subcollection(folder_name)
+        folder = session.root_collection.create_subcollection(@folder_name)
         folder.add(file)
       end
     end
 
     def remove_old_files
-      folder_name = Discourse.current_hostname
-      google_files = session.collection_by_title(folder_name).files
+      google_files = session.collection_by_title(@folder_name).files
       sorted = google_files.sort_by {|x| x.created_time}
       keep = sorted.take(SiteSetting.discourse_sync_to_googledrive_quantity)
       trash = google_files - keep
