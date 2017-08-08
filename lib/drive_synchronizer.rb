@@ -40,7 +40,7 @@ module DiscourseBackupToDrive
       google_files = session.collection_by_title(folder_name).files
       sorted = google_files.sort_by {|x| x.created_time}
       keep = sorted.take(SiteSetting.discourse_sync_to_googledrive_quantity)
-      trash = (google_files - keep).map(&:name)
+      trash = google_files - keep
       trash.each { |d| d.delete(true) }
     end
   end
