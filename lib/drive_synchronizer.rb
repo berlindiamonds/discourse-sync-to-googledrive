@@ -35,5 +35,16 @@ module DiscourseBackupToDrive
       end
     end
 
+    def remove_old_files
+      folder_name = Discourse.current_hostname
+      google_files = session.collection_by_title(folder_name).files
+      sorted = google_files.sort_by {|x| x.created_time}
+      keep = sorted.take(SiteSetting.discourse_sync_to_googledrive_quantity)
+      trash = (google_files - keep).map(&:name)
+      trash.each do |f|
+        session.collection_by_title(folder_name).file_by_title(f).delete(permanent = true)
+      end
+    end
+
   end
 end
