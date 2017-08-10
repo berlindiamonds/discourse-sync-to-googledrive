@@ -5,7 +5,7 @@ module Jobs
 
     def execute(arg)
       many_backups = Backup.all.take(SiteSetting.discourse_sync_to_googledrive_quantity)
-      many_backups.each do|backup|
+      many_backups.each do |backup|
         DiscourseBackupToDrive::DriveSynchronizer.new(backup).sync
       end
     end
