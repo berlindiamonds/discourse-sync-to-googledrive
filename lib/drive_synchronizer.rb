@@ -8,14 +8,23 @@ module DiscourseBackupToDrive
     end
 
     def session
-      @session ||= GoogleDrive::Session.from_service_account_key(StringIO.new(@api_key))
+      @session ||= GoogleDrive::Session.from_config("config.json")
     end
 
     def can_sync?
       @turned_on && @api_key.present? && backup.present?
     end
 
+    def delete_old_files
+      folder_name = Discourse.current_hostname
+      google_files = session.collection_by_title(folder_name).files
+      keep = google_files.take(SiteSetting.discourse_sync_to_googledrive_quantity)
+      trash = google_files - keep
+      trash.each { |d| d.delete(true) }
+    end
+
     protected
+
     def perform_sync
       folder_name = Discourse.current_hostname
       full_path = backup.path
@@ -23,7 +32,6 @@ module DiscourseBackupToDrive
       file = session.upload_from_file(full_path, filename)
       unless session.collection_by_title(folder_name) == nil
         upload_unique_files(file, folder_name)
-        remove_old_files(folder_name)
       else
         add_to_folder(file, folder_name)
       end
@@ -35,7 +43,6 @@ module DiscourseBackupToDrive
           add_to_folder(file, folder_name)
         end
       end
-      add_to_folder(file, folder_name)
     end
 
     def add_to_folder(file, folder_name)
@@ -49,12 +56,5 @@ module DiscourseBackupToDrive
       session.root_collection.remove(file)
     end
 
-    def remove_old_files(folder_name)
-      google_files = session.collection_by_title(folder_name).files
-      sorted = google_files.sort_by {|x| x.created_time}
-      keep = sorted.take(SiteSetting.discourse_sync_to_googledrive_quantity)
-      trash = google_files - keep
-      trash.each { |d| d.delete(true) }
-    end
   end
 end
