@@ -5,11 +5,10 @@ module DiscourseBackupToDrive
       super(backup)
       @api_key = SiteSetting.discourse_sync_to_googledrive_api_key
       @turned_on = SiteSetting.discourse_sync_to_googledrive_enabled
-      @folder_name = Discourse.current_hostname
     end
 
     def session
-      @session ||= GoogleDrive::Session.from_config("config.json")
+      @session ||= GoogleDrive::Session.from_service_account_key(StringIO.new(@api_key))
     end
 
     def can_sync?
