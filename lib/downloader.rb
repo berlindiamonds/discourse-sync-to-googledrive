@@ -1,6 +1,6 @@
 module Downloader
   class DownloadDrive
-    attr_accessor :google_files, :session, :ids
+    attr_accessor :google_files, :session, :id
 
     def initialize(id)
       @id = pick_file(:id)
@@ -47,7 +47,7 @@ module Downloader
       #  id
     end
 
-    def create_urls
+    def create_url
       # we expect an array of IDs from the front-end
       folder_name = Discourse.current_hostname
       found = google_files.select { |f| f.id == id }
