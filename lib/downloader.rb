@@ -44,13 +44,12 @@ module Downloader
       => id
     end
 
-    this_one = "0B9eyEerjltIgamstNDl1YUc2ejQ"
     file_collection = session.collection_by_title("localhost").files
 
     def create_url
-      found = file_collection.select { |f| f.id == this_one }
+      found = file_collection.select { |f| f.id == id }
       file_title = found.first.title
-      file_url = session.collection_by_title('localhost').file_by_title(file_title).human_url
+      file_url = session.collection_by_title(folder_name).file_by_title(file_title).human_url
     end
 
     def send_link
