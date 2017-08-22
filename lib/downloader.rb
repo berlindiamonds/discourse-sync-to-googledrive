@@ -23,7 +23,7 @@ module Downloader
 
     def list_files_json
       list_files = google_files.map do |o|
-        {title: o.title, id: o.id}
+        {title: o.title, id: o.id, size: o.size, time: o.created_time}
       end
       {"files" => list_files}.to_json
     end
