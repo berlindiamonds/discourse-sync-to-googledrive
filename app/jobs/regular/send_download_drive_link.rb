@@ -1,11 +1,11 @@
 module Jobs
-  class SyncBackupsToDrive < ::Jobs::Base
+  class SendDownloadDriveLink < ::Jobs::Base
 
     sidekiq_options queue: 'low'
 
     def execute(arg)
       to_address = args[:to_address]
-      download = DownloadDrive.new
+      download = Downloader::DownloadDrive.new
       file_url = download.create_url
 
       raise Discourse::InvalidParameters.new(:to_address) if to_address.blank?

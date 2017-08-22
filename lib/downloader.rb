@@ -1,6 +1,6 @@
 module Downloader
   class DownloadDrive
-    attr_accessor :google_files, :session, :id, :json_files
+    attr_accessor :google_files, :session, :id
 
     def initialize(id)
       @id = pick_file(:id)
@@ -48,11 +48,6 @@ module Downloader
       found = google_files.select { |f| f.id == id }
       file_title = found.first.title
       file_url = session.collection_by_title(folder_name).file_by_title(file_title).human_url
-    end
-
-    def send_link
-      put link into an email
-      send_mail to user
     end
   end
 end

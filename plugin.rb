@@ -31,4 +31,8 @@ after_initialize do
   DiscourseEvent.on(:backup_created) do
     Jobs.enqueue(:sync_backups_to_drive)
   end
+
+  DiscourseEvent.on(:download_chosen) do
+    Jobs.enqueue(:send_download_drive_link)
+  end
 end
