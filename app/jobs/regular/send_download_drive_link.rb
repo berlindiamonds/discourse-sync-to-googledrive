@@ -10,7 +10,7 @@ module Jobs
       file_url = download.create_url
 
       raise Discourse::InvalidParameters.new(:to_address) if to_address.blank?
-      raise Discourse::InvalidParameters.new(:file_urls) if file_url.blank?
+      raise Discourse::InvalidParameters.new(:file_url) if file_url.blank?
 
       message = DownloadBackupMailer.send_email(to_address, file_url)
       Email::Sender.new(message, :download_backup_message).send

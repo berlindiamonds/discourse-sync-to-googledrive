@@ -1,6 +1,6 @@
 module Downloader
   class DownloadDrive
-    attr_accessor :google_files, :session, :id
+    attr_accessor :google_files, :session, :ids
 
     def initialize(id)
       @id = pick_file(:id)
@@ -25,7 +25,7 @@ module Downloader
       list_files = google_files.map do |o|
         {title: o.title, id: o.id}
       end
-      list_files.to_json
+      {"files" => list_files}.to_json
     end
 
     # puts list_files_json
@@ -35,6 +35,10 @@ module Downloader
     # {\"title\":\"discourse-2017-08-10-140920-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgZGFrdGd0VGdFQnc\"},
     # {\"title\":\"discourse-2017-08-10-141214-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgZ2dyUTB1eGNjYUk\"}]"
 
+    # something like {"files": [ ... your array ... ] }
+    # file size
+    # date
+
     def pick_file(id)
       # click on a file from JsonFile
       # pick by id
@@ -43,11 +47,13 @@ module Downloader
       #  id
     end
 
-    def create_url
+    def create_urls
+      # we expect an array of IDs from the front-end
       folder_name = Discourse.current_hostname
       found = google_files.select { |f| f.id == id }
       file_title = found.first.title
       file_url = session.collection_by_title(folder_name).file_by_title(file_title).human_url
+      end
     end
   end
 end
