@@ -44,9 +44,13 @@ module Downloader
       => id
     end
 
-    def create_link
-      download a google_file by id
-      create a download_link with the google_file
+    this_one = "0B9eyEerjltIgamstNDl1YUc2ejQ"
+    file_collection = session.collection_by_title("localhost").files
+
+    def create_url
+      found = file_collection.select { |f| f.id == this_one }
+      file_title = found.first.title
+      file_url = session.collection_by_title('localhost').file_by_title(file_title).human_url
     end
 
     def send_link
