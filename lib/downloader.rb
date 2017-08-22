@@ -1,7 +1,6 @@
 module Downloader
   class DownloadDrive
-    attr_accessor :files, :session
-    attr_accessor :id, :json_files
+    attr_accessor :files, :session, :id, :json_files
 
     def initialize
       @id = JsonFile.new(:id)
@@ -10,7 +9,7 @@ module Downloader
     end
 
     def session
-      @session ||= GoogleDrive::Session.from_service_account_key(StringIO.new(SiteSetting.discourse_sync_to_googledrive_api_key))
+      @session ||= GoogleDrive::Session.from_service_account_key(StringIO.new(@api_key))
     end
 
     def can_download?
