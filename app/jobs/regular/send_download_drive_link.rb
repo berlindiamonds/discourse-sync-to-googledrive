@@ -3,9 +3,10 @@ module Jobs
 
     sidekiq_options queue: 'low'
 
-    def execute(arg)
+    def execute(args)
+      id = SiteSetting.pick_file
       to_address = args[:to_address]
-      download = Downloader::DownloadDrive.new
+      download = Downloader::DownloadDrive.new(id)
       file_url = download.create_url
 
       raise Discourse::InvalidParameters.new(:to_address) if to_address.blank?
