@@ -2,8 +2,8 @@ module Downloader
   class DownloadDrive
     attr_accessor :files, :session, :id, :json_files
 
-    def initialize
-      @id = JsonFile.new(:id)
+    def initialize(id)
+      @id = pick_file(:id)
       @api_key = SiteSetting.discourse_sync_to_googledrive_api_key
       @turned_on = SiteSetting.discourse_sync_to_googledrive_enabled
     end
@@ -36,11 +36,12 @@ module Downloader
 
     protected
 
-    def pick_file
+    def pick_file(id)
       click on a file from JsonFile
       pick by id
       download a google_file by id
       create a download_link with the google_file
+      => id
     end
 
     def create_link
