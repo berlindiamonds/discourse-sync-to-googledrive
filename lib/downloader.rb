@@ -6,21 +6,23 @@ module Downloader
       @session ||= GoogleDrive::Session.from_service_account_key(StringIO.new(SiteSetting.discourse_sync_to_googledrive_api_key))
     end
 
-    def files
-      @files ||= session.collection_by_title(folder_name).files
+    def google_files
+      @google_files ||= session.collection_by_title(folder_name).files
     end
 
-    def self.parse_files
-      download_list = files.each.map do|t|
-        { title: t.title, id: t.id }
+    def list_files_json
+      list_files = google_files.map do |o|
+        {title: o.title, id: o.id}
       end
-
-        download = JsonFile.new
-        download.files = JSON.parse(download_list)
-
-      return json_files
+      list_files.to_json
     end
   end
+# puts list_files_json
+# "[{\"title\":\"discourse-2017-08-10-135040-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgamstNDl1YUc2ejQ\"},
+# {\"title\":\"discourse-2017-08-10-135125-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgaHpLLWxLdm84Z1E\"},
+# {\"title\":\"discourse-2017-08-10-135726-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgb0VubjRLN3E0UW8\"},
+# {\"title\":\"discourse-2017-08-10-140920-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgZGFrdGd0VGdFQnc\"},
+# {\"title\":\"discourse-2017-08-10-141214-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgZ2dyUTB1eGNjYUk\"}]"
 
   class DownloadLink
     attr_accessor :id, :json_files
