@@ -56,34 +56,3 @@ module Downloader
     end
   end
 end
-JsonFile.new(:id)
-
-file = DownloadLink.new(:id)
-file.send_link
-
-
-# require 'json'
-# # => true
-# h = {a: 1, b: 2,c: 3}
-# # => {a: 1, b: 2,c: 3}
-# h.to_json
-# # => "{\"a\":1,\"b\":2,\"c\":3}"
-
-
-# companies = []
-
-# data_hash.each do |hash|
-#   companies << hash
-# end
-
-# companies_json = companies.to_json
-
-# def download_files
-#       download_list = Document.new
-#       download_list.metadata = JSON.parse(txt)
-#       google_files = session.collection_by_title(folder_name).files
-#       google_files.each { |p| }
-#     end
-
-#     google_files = session.collection_by_title(@folder_name).files
-#        sorted = google_files.sort_by {|x| x.created_time}
