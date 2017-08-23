@@ -52,7 +52,6 @@ module DiscourseDownloadFromDrive
       found = google_files.select { |f| f.id == id }
       file_title = found.first.title
       file_url = session.collection_by_title(folder_name).file_by_title(file_title).human_url
-      end
     end
   end
 end
