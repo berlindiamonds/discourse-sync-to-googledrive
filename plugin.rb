@@ -34,7 +34,8 @@ after_initialize do
     Jobs.enqueue(:sync_backups_to_drive)
   end
 
-  DiscourseEvent.on(:download_chosen) do
-    Jobs.enqueue(:send_download_drive_link)
+  Discourse::Application.routes.append do
+    post "/downloader" => "downloader#show"
   end
+
 end

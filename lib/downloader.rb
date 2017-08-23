@@ -1,5 +1,5 @@
-module Downloader
-  class DownloadDrive
+module DiscourseDownloadFromDrive
+  class DriveDownloader
     attr_accessor :google_files, :session, :id
 
     def initialize(id)
