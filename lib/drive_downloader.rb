@@ -38,7 +38,8 @@ module DiscourseDownloadFromDrive
     #   ]
     # }"
 
-    def pick_file(id)
+    def file_by_id
+      id = '0B7WjYjWZJv_4MENlYUM2SjkyU1E'
       # click on a file from JsonFile
       # pick by id
       # download a google_file by id
@@ -49,7 +50,7 @@ module DiscourseDownloadFromDrive
     def create_url
       # we expect an array of IDs from the front-end
       folder_name = Discourse.current_hostname
-      found = google_files.select { |f| f.id == id }
+      found = google_files.select { |f| f.id == file_by_id }
       file_title = found.first.title
       file_url = session.collection_by_title(folder_name).file_by_title(file_title).human_url
     end
