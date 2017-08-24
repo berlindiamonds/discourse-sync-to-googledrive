@@ -1,9 +1,8 @@
 module DiscourseDownloadFromDrive
   class DriveDownloader
-    attr_accessor :google_files, :session, :id
 
     def initialize(id)
-      @id = pick_file(:id)
+      @id = id
       @api_key = SiteSetting.discourse_sync_to_googledrive_api_key
       @turned_on = SiteSetting.discourse_sync_to_googledrive_enabled
     end
@@ -21,25 +20,15 @@ module DiscourseDownloadFromDrive
       @google_files ||= session.collection_by_title(folder_name).files
     end
 
-    def list_files_json
+    def json_list
       list_files = google_files.map do |o|
         {title: o.title, id: o.id, size: o.size, created_at: o.created_time}
       end
       {"files" => list_files}.to_json
     end
 
-    # "{\"files\":
-    #   [
-    #     {\"title\":\"discourse-2017-08-10-135040-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgamstNDl1YUc2ejQ\",\"size\":12067733,\"time\":\"2017-08-10T15:17:00+00:00\"},
-    #     {\"title\":\"discourse-2017-08-10-135125-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgaHpLLWxLdm84Z1E\",\"size\":12122496,\"time\":\"2017-08-10T15:16:50+00:00\"},
-    #     {\"title\":\"discourse-2017-08-10-135726-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgb0VubjRLN3E0UW8\",\"size\":12177845,\"time\":\"2017-08-10T15:16:37+00:00\"},
-    #     {\"title\":\"discourse-2017-08-10-140920-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgZGFrdGd0VGdFQnc\",\"size\":12233758,\"time\":\"2017-08-10T15:16:26+00:00\"},
-    #     {\"title\":\"discourse-2017-08-10-141214-v20170731030330.sql.gz\",\"id\":\"0B9eyEerjltIgZ2dyUTB1eGNjYUk\",\"size\":12288259,\"time\":\"2017-08-10T15:16:14+00:00\"}
-    #   ]
-    # }"
-
     def file_by_id
-      id = '0B7WjYjWZJv_4MENlYUM2SjkyU1E'
+      id = '0B7WjYjWZJv_4MENlYUM2SjkyU1E' # for testing
       # click on a file from JsonFile
       # pick by id
       # download a google_file by id
@@ -47,7 +36,7 @@ module DiscourseDownloadFromDrive
       #  id
     end
 
-    def create_url
+    def create_url(id)
       # we expect an array of IDs from the front-end
       folder_name = Discourse.current_hostname
       found = google_files.select { |f| f.id == file_by_id }
