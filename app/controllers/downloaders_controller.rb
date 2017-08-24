@@ -13,11 +13,10 @@ class DownloadersController < ApplicationController
   end
 
   def email
-    if id = DiscourseDownloadFromDrive::DriveDownloader[params.fetch(:id)]
-      download_url = DiscourseDownloadFromDrive::DriveDownloader.new(id).create_url
-      Jobs.enqueue(:download_drive_email, to_address: current_user.email, drive_file_path: download_url)
-      render nothing: true
-    end
+    download_url = DiscourseDownloadFromDrive::DriveDownloader.new(id).create_url
+    # download_url = DiscourseDownloadFromDrive::DriveDownloader.google_files[params:fetch(:id)]
+    Jobs.enqueue(:download_drive_email, to_address: current_user.email, drive_file_path: download_url)
+    render nothing: true
   end
 
 end
