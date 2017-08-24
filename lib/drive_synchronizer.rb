@@ -5,15 +5,23 @@ module DiscourseBackupToDrive
       super(backup)
       @api_key = SiteSetting.discourse_sync_to_googledrive_api_key
       @turned_on = SiteSetting.discourse_sync_to_googledrive_enabled
-      @folder_name = Discourse.current_hostname
     end
 
     def session
-      @session ||= GoogleDrive::Session.from_config("config.json")
+      @session ||= GoogleDrive::Session.from_service_account_key(StringIO.new(@api_key))
     end
 
     def can_sync?
       @turned_on && @api_key.present? && backup.present?
+    end
+
+    def list_files_json
+      folder_name = Discourse.current_hostname
+      google_files = session.collection_by_title(folder_name).files
+      list_files = google_files.map do |o|
+        {title: o.title, id: o.id, size: o.size, created_at: o.created_time}
+      end
+      {"files" => list_files}.to_json
     end
 
     def delete_old_files
