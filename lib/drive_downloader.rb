@@ -47,7 +47,6 @@ module DiscourseDownloadFromDrive
     end
 
     def create_url
-      # we expect an array of IDs from the front-end
       folder_name = Discourse.current_hostname
       found = google_files.select { |f| f.id == id }
       file_title = found.first.title

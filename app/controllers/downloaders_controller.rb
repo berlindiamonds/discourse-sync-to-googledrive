@@ -1,6 +1,6 @@
 class DownloadersController < ApplicationController
-  skip_before_filter :check_xhr
-  skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
+  skip_before_filter :check_xhr, :handle_unverfied_request
+  # skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
 
   def show
     google_list = DiscourseDownloadFromDrive::DriveDownloader.new(nil).list_files_json
@@ -12,9 +12,7 @@ class DownloadersController < ApplicationController
   end
 
   def create
-    # response.headers['X-CSRF-Token'] = form_authenticity_token
     @id = params[:id]
     Jobs.enqueue(:send_download_drive_link, id: @id)
   end
-
 end
