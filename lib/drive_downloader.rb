@@ -39,10 +39,11 @@ module DiscourseDownloadFromDrive
     # }"
 
     def pick_file(id)
-      # click on a file from JsonFile
+      # click on a file from JsonFile sends a POST :id to create
       # something like a <%= select_tag(:id) %>
       # pick by id from the view
-      #  id
+      # google_files.id(picked)
+      # returns id
     end
 
     def create_url
