@@ -3,7 +3,11 @@ require "email_backup_token"
 class DownloadersController < ApplicationController
   skip_before_filter :check_xhr
 
-  def show
+  # def create
+  #   @id = DiscourseDownloadFromDrive::DriveDownloader.google_files[params:fetch(:id)]
+  # end
+
+  def index
     google_list = DiscourseDownloadFromDrive::DriveDownloader.new(nil).json_list
 
     respond_to do |format|
@@ -12,10 +16,18 @@ class DownloadersController < ApplicationController
     end
   end
 
+  def new
+  end
+
+  def show
+    @id = DiscourseDownloadFromDrive::DriveDownloader.google_files[params:fetch(:id)]
+  end
+
   def email
+    id = '0B7WjYjWZJv_4MENlYUM2SjkyU1E'
     download_url = DiscourseDownloadFromDrive::DriveDownloader.new(id).create_url
     # download_url = DiscourseDownloadFromDrive::DriveDownloader.google_files[params:fetch(:id)]
-    Jobs.enqueue(:download_drive_email, to_address: current_user.email, drive_file_path: download_url)
+    Jobs.enqueue(:download_drive_email, to_address: 'example@email.com', drive_url: download_url)
     render nothing: true
   end
 

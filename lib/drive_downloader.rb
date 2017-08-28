@@ -1,6 +1,8 @@
 module DiscourseDownloadFromDrive
   class DriveDownloader
 
+    attr_accessor :google_files, :session, :id
+
     def initialize(id)
       @id = id
       @api_key = SiteSetting.discourse_sync_to_googledrive_api_key
@@ -20,7 +22,7 @@ module DiscourseDownloadFromDrive
       @google_files ||= session.collection_by_title(folder_name).files
     end
 
-    def json_list
+    def list_json
       list_files = google_files.map do |o|
         {title: o.title, id: o.id, size: o.size, created_at: o.created_time}
       end
@@ -36,7 +38,7 @@ module DiscourseDownloadFromDrive
       #  id
     end
 
-    def create_url(id)
+    def create_url
       folder_name = Discourse.current_hostname
       found = google_files.select { |f| f.id == id }
       file_title = found.first.title

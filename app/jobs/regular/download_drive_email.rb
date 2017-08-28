@@ -6,9 +6,9 @@ module Jobs
     sidekiq_options queue: 'critical'
 
     def execute(args)
-      to_address = 'example@email.com'
-      id = DiscourseDownloadFromDrive::DriveDownloader.new(nil).file_by_id
-      drive_file_path = DiscourseDownloadFromDrive::DriveDownloader.new(nil).create_url(id)
+      to_address = args[:to_address]
+      # id = DiscourseDownloadFromDrive::DriveDownloader.new(nil).file_by_id
+      drive_file_path = args[:drive_url]
 
       raise Discourse::InvalidParameters.new(:to_address) if to_address.blank?
       raise Discourse::InvalidParameters.new(:drive_file_path) if drive_file_path.blank?
