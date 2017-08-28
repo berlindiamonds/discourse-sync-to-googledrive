@@ -8,5 +8,11 @@ class DownloadersController < ApplicationController
       format.json {render json: google_list}
       format.html {render html: google_list}
     end
+
+    def create
+      download = DiscourseDownloadFromDrive::DriveDownloader.new
+      id = download.pick_file(params[:id])
+      Job.enqueue(:send_download_drive_link, id: id)
+    end
   end
 end

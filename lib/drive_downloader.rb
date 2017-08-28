@@ -40,9 +40,8 @@ module DiscourseDownloadFromDrive
 
     def pick_file(id)
       # click on a file from JsonFile
-      # pick by id
-      # download a google_file by id
-      # create a download_link with the google_file
+      # something like a <%= select_tag(:id) %>
+      # pick by id from the view
       #  id
     end
 
