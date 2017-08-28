@@ -1,8 +1,8 @@
-# name: discourse-backup-to-googledrive
+# name: discourse-sync-to-googledrive
 # about: -
 # version: 1.0
 # authors: Kaja & Jen
-# url: https://github.com/berlindiamonds/discourse-googledrive-backup
+# url: https://github.com/berlindiamonds/discourse-sync-to-googledrive
 
 gem 'httpclient', '2.8.3', { require: false }
 gem 'signet', '0.7.3', { require: false }
@@ -22,16 +22,22 @@ gem 'google-api-client', "0.10.3", { require: false }
 gem 'google_drive', '2.1.2'
 require 'sidekiq'
 
-enabled_site_setting :discourse_backups_drive_enabled
+enabled_site_setting :discourse_sync_to_googledrive_enabled
 
 after_initialize do
-  load File.expand_path("../lib/synchronizer.rb", __FILE__)
-  load File.expand_path("../app/jobs/regular/sync_backups_to_drive.rb", __FILE__)
-  load File.expand_path("../lib/drive_synchronizer.rb", __FILE__)
 
-  Backup.class_eval do
-    def after_create_hook
-      Jobs.enqueue(:sync_backups_to_drive)
-    end
+  load File.expand_path("../app/jobs/regular/sync_backups_to_drive.rb", __FILE__)
+  load File.expand_path("../app/jobs/regular/send_download_drive_link.rb", __FILE__)
+  load File.expand_path("../lib/drive_synchronizer.rb", __FILE__)
+  load File.expand_path("../lib/drive_downloader.rb", __FILE__)
+  load File.expand_path("../app/controllers/downloaders_controller.rb", __FILE__)
+
+  DiscourseEvent.on(:backup_created) do
+    Jobs.enqueue(:sync_backups_to_drive)
   end
+
+  Discourse::Application.routes.append do
+    get "/admin/plugins/discourse-sync-to-googledrive/downloader" => "downloaders#show"
+  end
+
 end
