@@ -1,10 +1,10 @@
 module DiscourseDownloadFromDrive
   class DriveDownloader
 
-    attr_accessor :google_files, :session, :id
+    attr_accessor :google_files, :session, :file_id
 
-    def initialize(id)
-      @id = id
+    def initialize(file_id)
+      @file_id = pick_file(file_id)
       @api_key = SiteSetting.discourse_sync_to_googledrive_api_key
       @turned_on = SiteSetting.discourse_sync_to_googledrive_enabled
     end
@@ -14,7 +14,7 @@ module DiscourseDownloadFromDrive
     end
 
     def can_download?
-      @turned_on && @api_key.present? && @id.present?
+      @turned_on && @api_key.present? && @file_id.present?
     end
 
     def google_files
@@ -24,23 +24,23 @@ module DiscourseDownloadFromDrive
 
     def json_list
       list_files = google_files.map do |o|
-        {title: o.title, id: o.id, size: o.size, created_at: o.created_time}
+        {title: o.title, file_id: o.id, size: o.size, created_at: o.created_time}
       end
       {"files" => list_files}.to_json
     end
 
-    def file_by_id
-      id = '0B7WjYjWZJv_4MENlYUM2SjkyU1E' # for testing
-      # click on a file from JsonFile
-      # pick by id
-      # download a google_file by id
-      # create a download_link with the google_file
-      #  id
+    def pick_file(file_id)
+      @file_id = "0B7WjYjWZJv_4blA0a2p6RzVraFE"
+      # click on a file from JsonFile sends a POST :file_id to create
+      # something like a <%= select_tag(:file_id) %>
+      # pick by file_id from the view
+      # google_files.file_id(picked)
+      # returns file_id
     end
 
     def create_url
       folder_name = Discourse.current_hostname
-      found = google_files.select { |f| f.id == id }
+      found = google_files.select { |f| f.id == file_id }
       file_title = found.first.title
       file_url = session.collection_by_title(folder_name).file_by_title(file_title).human_url
     end
