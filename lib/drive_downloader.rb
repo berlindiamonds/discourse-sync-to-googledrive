@@ -22,7 +22,7 @@ module DiscourseDownloadFromDrive
       @google_files ||= session.collection_by_title(folder_name).files
     end
 
-    def list_json
+    def json_list
       list_files = google_files.map do |o|
         {title: o.title, id: o.id, size: o.size, created_at: o.created_time}
       end
