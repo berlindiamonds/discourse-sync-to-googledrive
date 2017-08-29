@@ -7,7 +7,7 @@ class DownloadersController < ApplicationController
   #   @id = DiscourseDownloadFromDrive::DriveDownloader.google_files[params:fetch(:id)]
   # end
 
-  def index
+  def show
     google_list = DiscourseDownloadFromDrive::DriveDownloader.new(nil).json_list
 
     respond_to do |format|
@@ -16,12 +16,12 @@ class DownloadersController < ApplicationController
     end
   end
 
-  def new
-  end
-
-  def show
-    @id = DiscourseDownloadFromDrive::DriveDownloader.google_files[params:fetch(:id)]
-  end
+  # def new
+  # end
+  #
+  # def show
+  #   @id = DiscourseDownloadFromDrive::DriveDownloader.google_files[params:fetch(:id)]
+  # end
 
   def email
     id = '0B7WjYjWZJv_4MENlYUM2SjkyU1E'
