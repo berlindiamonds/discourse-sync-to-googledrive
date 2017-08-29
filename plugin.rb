@@ -27,10 +27,11 @@ enabled_site_setting :discourse_sync_to_googledrive_enabled
 after_initialize do
 
   load File.expand_path("../app/jobs/regular/sync_backups_to_drive.rb", __FILE__)
-  load File.expand_path("../app/jobs/regular/send_download_drive_link.rb", __FILE__)
+  load File.expand_path("../app/jobs/regular/download_drive_email.rb", __FILE__)
   load File.expand_path("../lib/drive_synchronizer.rb", __FILE__)
   load File.expand_path("../lib/drive_downloader.rb", __FILE__)
   load File.expand_path("../app/controllers/downloaders_controller.rb", __FILE__)
+
 
   DiscourseEvent.on(:backup_created) do
     Jobs.enqueue(:sync_backups_to_drive)
