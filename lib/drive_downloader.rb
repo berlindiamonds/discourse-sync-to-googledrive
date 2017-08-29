@@ -1,10 +1,10 @@
 module DiscourseDownloadFromDrive
   class DriveDownloader
-    
+
     attr_accessor :google_files, :session, :id
 
     def initialize(id)
-      @id = pick_file(:id)
+      @id = id
       @api_key = SiteSetting.discourse_sync_to_googledrive_api_key
       @turned_on = SiteSetting.discourse_sync_to_googledrive_enabled
     end
