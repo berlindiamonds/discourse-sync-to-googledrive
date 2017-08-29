@@ -32,6 +32,7 @@ after_initialize do
   load File.expand_path("../lib/drive_downloader.rb", __FILE__)
   load File.expand_path("../app/controllers/downloaders_controller.rb", __FILE__)
 
+
   DiscourseEvent.on(:backup_created) do
     Jobs.enqueue(:sync_backups_to_drive)
   end
@@ -39,5 +40,5 @@ after_initialize do
   Discourse::Application.routes.append do
     get "/admin/plugins/discourse-sync-to-googledrive/downloader" => "downloaders#show"
   end
-
+  
 end

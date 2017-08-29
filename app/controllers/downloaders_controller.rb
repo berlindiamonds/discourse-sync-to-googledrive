@@ -11,5 +11,4 @@ class DownloadersController < ApplicationController
       format.html {render html: google_list}
     end
   end
-
 end
