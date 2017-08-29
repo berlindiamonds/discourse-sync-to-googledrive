@@ -59,6 +59,5 @@ describe ApplicationController::DownloadersController, type: :controller do
       end
 
     end
-
   end
 end

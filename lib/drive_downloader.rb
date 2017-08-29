@@ -1,9 +1,10 @@
 module DiscourseDownloadFromDrive
   class DriveDownloader
-    attr_accessor :google_files, :session, :file_file_id
 
-    def initialize(file_file_id)
-      @file_id = pick_file(:file_id)
+    attr_accessor :google_files, :session, :file_id
+
+    def initialize(file_id)
+      @file_id = pick_file(file_id)
       @api_key = SiteSetting.discourse_sync_to_googledrive_api_key
       @turned_on = SiteSetting.discourse_sync_to_googledrive_enabled
     end
@@ -27,16 +28,6 @@ module DiscourseDownloadFromDrive
       end
       {"files" => list_files}.to_json
     end
-
-    # "{\"files\":
-    #   [
-    #     {\"title\":\"discourse-2017-08-10-135040-v20170731030330.sql.gz\",\"file_id\":\"0B9eyEerjltIgamstNDl1YUc2ejQ\",\"size\":12067733,\"time\":\"2017-08-10T15:17:00+00:00\"},
-    #     {\"title\":\"discourse-2017-08-10-135125-v20170731030330.sql.gz\",\"file_id\":\"0B9eyEerjltIgaHpLLWxLdm84Z1E\",\"size\":12122496,\"time\":\"2017-08-10T15:16:50+00:00\"},
-    #     {\"title\":\"discourse-2017-08-10-135726-v20170731030330.sql.gz\",\"file_id\":\"0B9eyEerjltIgb0VubjRLN3E0UW8\",\"size\":12177845,\"time\":\"2017-08-10T15:16:37+00:00\"},
-    #     {\"title\":\"discourse-2017-08-10-140920-v20170731030330.sql.gz\",\"file_id\":\"0B9eyEerjltIgZGFrdGd0VGdFQnc\",\"size\":12233758,\"time\":\"2017-08-10T15:16:26+00:00\"},
-    #     {\"title\":\"discourse-2017-08-10-141214-v20170731030330.sql.gz\",\"file_id\":\"0B9eyEerjltIgZ2dyUTB1eGNjYUk\",\"size\":12288259,\"time\":\"2017-08-10T15:16:14+00:00\"}
-    #   ]
-    # }"
 
     def pick_file(file_id)
       @file_id = "0B7WjYjWZJv_4blA0a2p6RzVraFE"

@@ -6,7 +6,7 @@ module Jobs
     def execute(args)
       id = @file_id
       to_address = args[:to_address]
-      download = DiscourseDownloadFromDrive::DriveDownloader.new(@file_id)
+      download = DiscourseDownloadFromDrive::DriveDownloader.new(id)
       file_url = download.create_url
 
       raise Discourse::InvalidParameters.new(:to_address) if to_address.blank?
