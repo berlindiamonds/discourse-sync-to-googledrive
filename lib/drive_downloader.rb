@@ -38,11 +38,13 @@ module DiscourseDownloadFromDrive
       # returns file_id
     end
 
-    def create_url
-      folder_name = Discourse.current_hostname
+    def create_from_id(file_id)
       found = google_files.select { |f| f.id == file_id }
       file_title = found.first.title
-      file_url = session.collection_by_title(folder_name).file_by_title(file_title).human_url
+      file = session.file_by_title(file_title)
+      path = File.join(Backup.base_directory, file_title)
+      file.download_to_file("#{path}")
     end
+
   end
 end
