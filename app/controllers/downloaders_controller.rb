@@ -4,7 +4,7 @@ class DownloadersController < ApplicationController
   skip_before_filter :check_xhr
   # skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
 
-  def show
+  def index
     google_list = DiscourseDownloadFromDrive::DriveDownloader.new(nil).json_list
 
     respond_to do |format|
