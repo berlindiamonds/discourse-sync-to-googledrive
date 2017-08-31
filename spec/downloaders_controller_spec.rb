@@ -6,7 +6,7 @@ describe ApplicationController::DownloadersController, type: :controller do
     expect(DownloadersController < ApplicationController).to eq(true)
   end
 
-  describe "GET #show" do
+  describe "GET #index" do
     let(:sample_json) {
       "{\"files\":[
           {
@@ -25,12 +25,12 @@ describe ApplicationController::DownloadersController, type: :controller do
     }
 
     it "returns a json list of all google_drive files" do
-      xhr :get, :show, format: :json
+      xhr :get, :index, format: :json
       expect(response.body).to eq(sample_json)
     end
 
     it "responds with 200 status" do
-      xhr :get, :show
+      xhr :get, :index
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
@@ -58,6 +58,6 @@ describe ApplicationController::DownloadersController, type: :controller do
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
-    
+
   end
 end

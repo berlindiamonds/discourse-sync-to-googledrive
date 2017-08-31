@@ -38,7 +38,7 @@ after_initialize do
   end
 
   Discourse::Application.routes.append do
-    get "/admin/plugins/discourse-sync-to-googledrive/downloader" => "downloaders#show"
+    get "/admin/plugins/discourse-sync-to-googledrive/downloader" => "downloaders#index"
     post "/admin/plugins/discourse-sync-to-googledrive/downloader", to: "downloaders#create", as: "download_file"
   end
 
