@@ -1,5 +1,13 @@
 {{#each model.files as |f|}}
-  FILE!
+  <b>Name:</b>
+  {{f.title}}
+  <br>
+  <b>Created at:</b>
+  {{f.created_at}}
+  <br>
+  <b>Size:</b>
+  {{f.size}}
+  <br><br>
 {{else}}
   No files found
 {{/each}}
