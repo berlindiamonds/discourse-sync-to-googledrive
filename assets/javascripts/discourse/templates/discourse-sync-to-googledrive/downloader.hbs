@@ -1,15 +1,27 @@
-{{#each model.files as |f|}}
-  <b>Name:</b>
-  {{f.title}}
-  <br>
-  <b>Created at:</b>
-  {{f.created_at}}
-  <br>
-  <b>Size:</b>
-  {{f.size}}
-  <br><br>
-{{else}}
-  No files found
-{{/each}}
-
-<button {{action "test"}}>test button</button>
+<table>
+  <tr>
+    <th width="45%">{{i18n 'admin.backups.columns.filename'}}</th>
+    <th width="10%">{{i18n 'admin.backups.columns.size'}}</th>
+    <th width="10%"><b>Created</b></th>
+  </tr>
+  {{#each model.files as |f|}}
+  <tr>
+    <td>{{f.title}}</td>
+    <td>{{human-size f.size}}</td>
+    <td>{{f.created_at}}</td>
+    <td>
+      <div class ="pull-right">
+        {{d-button class="download"
+                   action="download"
+                   actionParam=backup
+                   icon="download"
+                   title="admin.backups.operations.download.title"
+                   label="admin.backups.operations.download.label"}}
+      </div>
+    </td>
+  </tr>
+    {{else}}
+    No files found
+    {{/each}}
+  <button {{action "test"}}>test button</button>
+</table>
