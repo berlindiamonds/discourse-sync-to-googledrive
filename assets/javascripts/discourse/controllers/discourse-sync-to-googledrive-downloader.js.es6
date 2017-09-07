@@ -1,5 +1,6 @@
 // Because of its filename, this controller will automatically be used
 // to handle actions from the `downloader.hbs` template
+import { ajax } from 'discourse/lib/ajax';
 
 export default Ember.Controller.extend({
   actions: {
@@ -9,11 +10,11 @@ export default Ember.Controller.extend({
 
     download(file) {
       console.log("hello from the ember action", file)
-      // let link = backup.get('title');
-      // ajax("/admin/plugins/discourse-sync-to-googledrive/downloader/" + link, { type: "PUT" })
-      // .then(() => {
-      //   bootbox.alert(I18n.t("admin.backups.operations.download.alert"));
-      // });
+      file.save();
+        // ajax("/admin/plugins/discourse-sync-to-googledrive/downloader/" + file, { type: "PUT" })
+        // .then(() => {
+        //    bootbox.alert(I18n.t("admin.backups.operations.download.alert"));
+        // });
     }
   }
 });
