@@ -10,11 +10,10 @@ export default Ember.Controller.extend({
 
     download(file) {
       console.log("hello from the ember action", file)
-      file.save();
-        // ajax("/admin/plugins/discourse-sync-to-googledrive/downloader/" + file, { type: "PUT" })
-        // .then(() => {
-        //    bootbox.alert(I18n.t("admin.backups.operations.download.alert"));
-        // });
+         ajax("/admin/plugins/discourse-sync-to-googledrive/downloader/" + file.file_id, { type: "PUT" })
+        .then(() => {
+           bootbox.alert(I18n.t("admin.backups.operations.download.alert"));
+        });
     }
   }
 });
