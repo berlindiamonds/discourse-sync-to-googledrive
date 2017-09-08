@@ -4,7 +4,7 @@ module DiscourseDownloadFromDrive
     attr_accessor :google_files, :session, :file_id
 
     def initialize(file_id)
-      @file_id = pick_file(file_id)
+      @file_id = file_id
       @api_key = SiteSetting.discourse_sync_to_googledrive_api_key
       @turned_on = SiteSetting.discourse_sync_to_googledrive_enabled
     end
@@ -29,21 +29,13 @@ module DiscourseDownloadFromDrive
       {"files" => list_files}.to_json
     end
 
-    def pick_file(file_id)
-      @file_id = "0B7WjYjWZJv_4blA0a2p6RzVraFE"
-      # click on a file from JsonFile sends a POST :file_id to create
-      # something like a <%= select_tag(:file_id) %>
-      # pick by file_id from the view
-      # google_files.file_id(picked)
-      # returns file_id
-    end
-
-    def create_from_id(file_id)
+    def download
       found = google_files.select { |f| f.id == file_id }
       file_title = found.first.title
       file = session.file_by_title(file_title)
       path = File.join(Backup.base_directory, file_title)
       file.download_to_file("#{path}")
+      path
     end
 
   end
