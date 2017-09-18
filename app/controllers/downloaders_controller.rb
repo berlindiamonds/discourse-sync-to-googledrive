@@ -1,5 +1,5 @@
 require "email_backup_token"
-require_relative "/jobs/regular/send_download_drive_link.rb"
+require_relative "../jobs/regular/send_download_drive_link.rb"
 
 class DownloadersController < Admin::AdminController
   requires_plugin 'discourse-sync-to-googledrive'
@@ -12,7 +12,7 @@ class DownloadersController < Admin::AdminController
   def create
     file_id = params.fetch(:file_id)
     download_url = "#{url_for(controller: 'downloaders', action: 'create')}"
-    Jobs.enqueue(:download_drive_email, to_address: 'example@email.com', drive_url: download_url)
+    Jobs.enqueue(:send_download_drive_link, to_address: 'example@email.com', drive_url: download_url)
     render nothing: true
   end
 
