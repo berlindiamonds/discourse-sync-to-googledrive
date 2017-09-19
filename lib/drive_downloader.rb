@@ -30,12 +30,14 @@ module DiscourseDownloadFromDrive
     end
 
     def download
-      found = google_files.select { |f| f.id == file_id }
-      file_title = found.first.title
-      file = session.file_by_title(file_title)
-      path = File.join(Backup.base_directory, file_title)
+      file = session.file_by_title(file_name)
+      path = File.join(Backup.base_directory, file_name)
       file.download_to_file("#{path}")
       path
+    end
+
+    def file_name
+      @file_name ||= google_files.select { |f| f.id == file_id }.first.title
     end
 
   end
