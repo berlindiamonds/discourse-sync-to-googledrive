@@ -4,10 +4,8 @@ module Jobs
     sidekiq_options queue: 'low'
 
     def execute(args)
-      id = @file_id
       to_address = args[:to_address]
-      download = DiscourseDownloadFromDrive::DriveDownloader.new(id)
-      file_url = download.create_url
+      file_url = args[:drive_url]
 
       raise Discourse::InvalidParameters.new(:to_address) if to_address.blank?
       raise Discourse::InvalidParameters.new(:file_url) if file_url.blank?
