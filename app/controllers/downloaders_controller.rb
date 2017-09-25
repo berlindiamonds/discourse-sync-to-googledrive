@@ -3,7 +3,7 @@ require_relative "../jobs/regular/send_download_drive_link.rb"
 
 class DownloadersController < Admin::AdminController
   requires_plugin 'discourse-sync-to-googledrive'
-  skip_before_filter :check_xhr, only: [:show]
+  skip_before_action :check_xhr, only: [:show]
 
   def index
     google_list = DiscourseDownloadFromDrive::DriveDownloader.new(nil).json_list
