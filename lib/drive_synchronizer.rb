@@ -15,6 +15,15 @@ module DiscourseBackupToDrive
       @turned_on && @api_key.present? && backup.present?
     end
 
+    def list_files_json
+      folder_name = Discourse.current_hostname
+      google_files = session.collection_by_title(folder_name).files
+      list_files = google_files.map do |o|
+        {title: o.title, id: o.id, size: o.size, created_at: o.created_time}
+      end
+      {"files" => list_files}.to_json
+    end
+
     def delete_old_files
       folder_name = Discourse.current_hostname
       google_files = session.collection_by_title(folder_name).files

@@ -25,10 +25,25 @@ require 'sidekiq'
 enabled_site_setting :discourse_sync_to_googledrive_enabled
 
 after_initialize do
+
   load File.expand_path("../app/jobs/regular/sync_backups_to_drive.rb", __FILE__)
+  load File.expand_path("../app/jobs/regular/send_download_drive_link.rb", __FILE__)
   load File.expand_path("../lib/drive_synchronizer.rb", __FILE__)
+  load File.expand_path("../lib/drive_downloader.rb", __FILE__)
+  load File.expand_path("../app/controllers/downloaders_controller.rb", __FILE__)
+
 
   DiscourseEvent.on(:backup_created) do
     Jobs.enqueue(:sync_backups_to_drive)
   end
+
+  Discourse::Application.routes.append do
+    get "/admin/plugins/discourse-sync-to-googledrive/downloader" => "downloaders#index"
+    get "/admin/plugins/discourse-sync-to-googledrive/downloader/:file_id" => "downloaders#show"
+    put "/admin/plugins/discourse-sync-to-googledrive/downloader/:file_id" => "downloaders#show"
+    put "/admin/plugins/discourse-sync-to-googledrive/downloader" => "downloaders#email"
+    # post "/admin/plugins/discourse-sync-to-googledrive/downloader" => "downloaders#create"
+    # post "/admin/plugins/discourse-sync-to-googledrive/downloader", to: "downloaders#create", as: "download_file"
+  end
+  
 end
