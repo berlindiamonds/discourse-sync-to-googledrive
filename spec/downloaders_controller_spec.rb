@@ -1,6 +1,9 @@
 require 'rails_helper'
 
-describe Admin::AdminController::DownloadersController, type: :controller do
+describe DownloadersController, type: :controller do
+  before {
+    SiteSetting.discourse_sync_to_googledrive_enabled = true
+  }
 
   context "while logged in as an admin" do
 
@@ -29,22 +32,21 @@ describe Admin::AdminController::DownloadersController, type: :controller do
       }
 
       it "returns a json list of all google_drive files" do
-        xhr :get, :index, format: :json
+        get :index, format: :json, xhr: true
         expect(response.body).to eq(sample_json)
       end
 
       it "responds with 200 status" do
-        xhr :get, :index
+        get :index, xhr: true
         expect(response).to be_success
         expect(response).to have_http_status(200)
       end
     end
 
-    describe "POST #create" do
+    describe "PUT #create" do
       let(:sample_file_id) {
         "0B7WjYjWZJv_4blA0a2p6RzVraFE"
       }
-
 
       before {
         drive_instance = DiscourseDownloadFromDrive::DriveDownloader
@@ -52,13 +54,13 @@ describe Admin::AdminController::DownloadersController, type: :controller do
       }
 
       it "sends a google-file-id to the job" do
-        xhr :post, :create
+        put :create, xhr: true, params: { file_id: sample_file_id }
         @file_id = :sample_file_id
         expect(@file_id).to eq(:sample_file_id)
       end
 
       it "responds with 200 status" do
-        xhr :post, :create
+        put :create, xhr: true, params: { file_id: sample_file_id }
         expect(response).to be_success
         expect(response).to have_http_status(200)
       end

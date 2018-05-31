@@ -17,9 +17,13 @@ module DiscourseDownloadFromDrive
       @turned_on && @api_key.present? && @file_id.present?
     end
 
-    def google_files
+    def collection
       folder_name = Discourse.current_hostname
-      @google_files ||= session.collection_by_title(folder_name).files
+      @collection ||= session.collection_by_title(folder_name) || session.create_collection(folder_name)
+    end
+
+    def google_files
+      @google_files ||= collection&.files || []
     end
 
     def json_list

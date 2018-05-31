@@ -17,9 +17,12 @@ gem 'declarative-option', '0.1.0', { require: false }
 gem 'declarative', '0.0.9', { require: false }
 gem 'uber', '0.1.0', { require: false }
 gem 'representable', "3.0.4", { require: false }
-gem 'google-api-client', "0.10.3", { require: false }
+gem 'mime-types-data', "3.2016.0521", {require: false}
+gem 'mime-types', "3.1", {require: false}
+gem 'retriable', "3.0.2", {require: false}
+gem 'google-api-client', "0.11.3", { require: false }
 
-gem 'google_drive', '2.1.2'
+gem 'google_drive', '2.1.11'
 require 'sidekiq'
 
 enabled_site_setting :discourse_sync_to_googledrive_enabled
