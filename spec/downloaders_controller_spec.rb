@@ -1,6 +1,10 @@
 require 'rails_helper'
+require_relative "../app/jobs/regular/send_download_drive_link.rb"
 
-describe Admin::AdminController::DownloadersController, type: :controller do
+describe DownloadersController, type: :controller do
+  before {
+    SiteSetting.discourse_sync_to_googledrive_enabled = true
+  }
 
   context "while logged in as an admin" do
 
@@ -29,40 +33,43 @@ describe Admin::AdminController::DownloadersController, type: :controller do
       }
 
       it "returns a json list of all google_drive files" do
-        xhr :get, :index, format: :json
+        get :index, format: :json, xhr: true
         expect(response.body).to eq(sample_json)
       end
 
       it "responds with 200 status" do
-        xhr :get, :index
+        get :index, xhr: true
         expect(response).to be_success
         expect(response).to have_http_status(200)
       end
     end
 
-    describe "POST #create" do
-      let(:sample_file_id) {
-        "0B7WjYjWZJv_4blA0a2p6RzVraFE"
-      }
-
+    describe "PUT #create" do
+      let(:sample_file_id) { "0B7WjYjWZJv_4blA0a2p6RzVraFE" }
+      let(:download_path) { "http://example.com/path/to/download" }
+      let(:job_klass) { Jobs::SendDownloadDriveLink }
 
       before {
+        SiteSetting.queue_jobs = true
         drive_instance = DiscourseDownloadFromDrive::DriveDownloader
         drive_instance.any_instance.stubs(:file_id).returns(sample_file_id)
+        drive_instance.any_instance.stubs(:download).returns(download_path)
       }
 
       it "sends a google-file-id to the job" do
-        xhr :post, :create
-        @file_id = :sample_file_id
-        expect(@file_id).to eq(:sample_file_id)
-      end
+        expect do
+          put :create,
+              xhr: true,
+              params: { file_id: sample_file_id },
+              format: :json
+          expect(response).to be_success
+          expect(response).to have_http_status(200)
+        end.to change { job_klass.jobs.count }.by(1)
 
-      it "responds with 200 status" do
-        xhr :post, :create
-        expect(response).to be_success
-        expect(response).to have_http_status(200)
+        job_args = job_klass.jobs.last['args'].first
+        expect(job_args['to_address']).to eq(@admin.email)
+        expect(job_args['drive_url']).to include("/admin/plugins/discourse-sync-to-googledrive/downloader/")
       end
-
     end
   end
 end

@@ -16,7 +16,7 @@ class DownloadersController < Admin::AdminController
     file_path = DiscourseDownloadFromDrive::DriveDownloader.new(file_id).download
     download_url = "#{url_for(controller: 'downloaders', action: 'show')}?token=#{token}"
     Jobs.enqueue(:send_download_drive_link, to_address: current_user.email, drive_url: download_url)
-    render nothing: true
+    head :ok
   end
 
   def show
@@ -33,7 +33,7 @@ class DownloadersController < Admin::AdminController
       if @error
         render layout: 'no_ember', status: 422, text: "this link has already been used and is therefore expired"
       else
-        render nothing: true, status: 404
+        head 404
       end
     end
   end
